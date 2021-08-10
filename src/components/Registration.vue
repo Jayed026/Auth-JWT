@@ -1,18 +1,28 @@
 <template>
   <div>
-    <Nav />
     <body class="text-center">
       <form class="form-signin">
         <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
-        <label for="inputname" class="sr-only">Name</label>
+        <label for="inputname" class="sr-only">Full Name</label>
         <input
           type="name"
           class="form-control"
           placeholder="your name"
-          v-model="name"
+          v-model="fullname"
           required
           autofocus
         />
+
+        <label for="inputname" class="sr-only">User Name</label>
+        <input
+          type="name"
+          class="form-control"
+          placeholder="user name"
+          v-model="username"
+          required
+          autofocus
+        />
+
         <label for="inputEmail" class="sr-only">Email address</label>
         <input
           type="email"
@@ -30,6 +40,34 @@
           v-model="password"
           required
         />
+
+        <label for="inputPassword" class="sr-only">Confirm Password</label>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="confirm Password"
+          v-model="confirmpassword"
+          required
+        />
+
+        <label for="inputPassword" class="sr-only">phone</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Phone"
+          v-model="phone"
+          required
+        />
+
+        <label for="inputPassword" class="sr-only">Alternate phone</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="alternate phone"
+          v-model="alternatephone"
+          required
+        />
+
         <div class="checkbox mb-3">
           <label>
             <input type="checkbox" value="remember-me" /> Remember me
@@ -43,7 +81,7 @@
           Sign up
         </button>
         {{ error }}
-        <p class="mt-5 mb-3 text-muted">&copy; bappy-2020</p>
+        <p class="mt-5 mb-3 text-muted">&copy; sekhao-2021</p>
       </form>
     </body>
   </div>
@@ -51,38 +89,47 @@
 
 <script>
 import axios from "axios";
-import Nav from "./Nav.vue";
+
 export default {
   name: "Registration",
   data() {
     return {
-      name: "",
+      fullname: "",
+      username: "",
       email: "",
       password: "",
+      confirmpassword: "",
+      phone: "",
+      alternatephone: "",
       error: "",
     };
   },
-  components: {
-    Nav,
-  },
+  components: {},
   methods: {
     signup() {
       let newUser = {
-        name: this.name,
+        fullname: this.fullname,
+        username: this.username,
+
         email: this.email,
         password: this.password,
+        confirmpassword: this.confirmpassword,
+        phone: this.phone,
+        alternatephone: this.alternatephone,
       };
-      axios.post("http://localhost:5000/reg", newUser).then(
-        (res) => {
-          console.log(res);
-          this.error = "";
-          this.$router.push("/login");
-        },
-        (err) => {
-          console.log(err.response);
-          this.err = err.response.data.err;
-        }
-      );
+      axios
+        .post("http://shekhao.herokuapp.com/signup/studentsignup", newUser)
+        .then(
+          (res) => {
+            console.log(res);
+            this.error = "";
+            this.$router.push("/login");
+          },
+          (err) => {
+            console.log(err.response);
+            this.err = err.response.data.err;
+          }
+        );
     },
   },
 };
@@ -93,7 +140,7 @@ body {
   height: 100%;
 }
 
-body {
+/* body {
   display: -ms-flexbox;
   display: -webkit-box;
   display: flex;
@@ -105,8 +152,8 @@ body {
   justify-content: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
-}
+  background-color: #f5f5f5; 
+} */
 
 .form-signin {
   width: 100%;

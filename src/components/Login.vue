@@ -1,15 +1,14 @@
 <template>
   <div>
-    <Nav></Nav>
     <body class="text-center">
       <form class="form-signin">
         <h1 class="h3 mb-3 font-weight-normal">Please login in</h1>
-        <label for="inputEmail" class="sr-only">Email address</label>
+        <label for="inputEmail" class="sr-only">User Name</label>
         <input
-          type="email"
+          type="name"
           class="form-control"
-          v-model="email"
-          placeholder="Email address"
+          v-model="username"
+          placeholder=" enter username"
           required
           autofocus
         />
@@ -28,23 +27,20 @@
         >
           log in
         </button>
-        <p class="mt-5 mb-3 text-muted">&copy; bappy-2020</p>
+        <p class="mt-5 mb-3 text-muted">&copy; bappy-2021</p>
       </form>
     </body>
   </div>
 </template>
 
 <script>
-import Nav from "./Nav.vue";
 import axios from "axios";
 export default {
   name: "Login",
-  components: {
-    Nav,
-  },
+  components: {},
   data() {
     return {
-      email: "",
+      username: "",
       password: "",
       error: "",
     };
@@ -52,15 +48,15 @@ export default {
   methods: {
     login() {
       let user = {
-        email: this.email,
+        username: this.username,
         password: this.password,
       };
-      axios.post("http://localhost:5000/login", user).then(
+      axios.post("https://api-shekhao.herokuapp.com/login", user).then(
         (res) => {
           //if successfull
           if (res.status === 200) {
-            localStorage.setItem("token", res.data.token);
-            this.$router.push("/");
+            //localStorage.setItem("token", res.data.token);
+            this.$router.push("/home");
           }
         },
         (err) => {
@@ -78,7 +74,7 @@ body {
   height: 100%;
 }
 
-body {
+/* body {
   display: -ms-flexbox;
   display: -webkit-box;
   display: flex;
@@ -91,7 +87,7 @@ body {
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #f5f5f5;
-}
+} */
 
 .form-signin {
   width: 100%;
